@@ -114,7 +114,7 @@ Before any manipulation, make sure that the NodeMCU is disconnected from a power
 
 To connect the sensor to the NodeMCU use this schema:
 
-![DS18B20 wiring](./images/DS18B20 wiring.png)
+![DS18B20 wiring](images/DS18B20_wiring.png)
 
 ## Source code
 
