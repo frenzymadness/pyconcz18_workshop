@@ -60,6 +60,8 @@ def main():
         print('Cannot find any OneWire sensor')
         return
 
+    print('Sensors found:', sensors)
+
     while True:
         for sensor in sensors:
             # Measuring
@@ -71,8 +73,11 @@ def main():
                 print('ERROR while reading from OneWire')
                 print(e)
 
+            print('Measured temperature is:', temp)
+
             # Sending to MQTT
             try:
+                print('Sending message to MQTT')
                 pub_message(SERVER_IP,
                             TOPIC,
                             b'{}'.format(temp))
@@ -80,6 +85,7 @@ def main():
                 print('ERROR while publishing message to MQTT')
                 print(e)
 
+        print('Going to sleep ...')
         sleep(60)
 
 
