@@ -21,6 +21,7 @@ Vagrant.configure("2") do |config|
 
     # Disable Selinux
     sudo echo -e "SELINUX=disabled\nSELINUXTYPE=targeted" > /etc/sysconfig/selinux
+    sudo setenforce 0
 
     # MQTT service
     sudo systemctl enable mosquitto
