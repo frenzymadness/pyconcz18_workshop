@@ -208,7 +208,7 @@ Let's check the configuration and restart the core to load it.
 
 MQTT integration is ready for the first MQTT-based sensor. Let's configure it.
 
-Add these lines somewhere to the file. Don't forget to change the topic is you changed it before in the script.
+Add these lines somewhere to the file. Don't forget to change the topic name to the one you used with the `mosquitto_sub` command.
 
 ```
 sensor pycon_temp:
