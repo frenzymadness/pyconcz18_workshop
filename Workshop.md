@@ -2,11 +2,29 @@
 
 To save some time and don't waste it waiting for download a bunch of data on almost thirty computers, please prepare some software in advance.
 
+## Content of this repository
+
+Please, download or clone this repository. It contains files you'll need during the workshop.
+
 ## Vagrant (+ VirtualBox)
 
 Vagrant is an awesome tool to manage various virtualization platforms for you and it is able to provision whole virtual machine from settings in one file. Vagrantfile for our workshop is available in this repository.
 
 If you are new to Vagrant, you'll also need some virtualization backend. To keep it simple, download and install Virtualbox. If you are using some other like libvirt, keep it.
+
+Virtual machine we'll use for services is based on Fedora 27 and the whole provision script is a part of Vagrantfile.
+
+Because the first start of the virtual machine takes some time, run the following command in the repository folder in advance (before the workshop). If you encounter any troubles, feel free to ping me during the conference and we can solve it.
+
+```
+vagrant up
+```
+
+Then you can stop it by:
+
+```
+vagrant halt
+```
 
 * Vagrant: https://www.vagrantup.com/downloads.html
 * Virtualbox: https://www.virtualbox.org/wiki/Downloads
@@ -33,17 +51,17 @@ We are gonna build simple Python-based home automation system with MQTT communic
 
 I'll borrow you all the stuff you'll need. If you want, you can buy the whole set at the end of the workshop.
 
-## Breadboard, wires, microUSB
+## NodeMCU
 
-We are gonna use microUSB cable to power NodeMCU board and breadboard + wires to connect temperature sensor to NodeMCU.
+NodeMCU is a smart board with ESP8266 WiFi chip which has so much computing power that it can run Python (MicroPython).
 
 ## DS18B20 temperature sensor
 
 Very cheap and well-known temperature sensor from Maxim integrated. It uses OneWire bus for communications which allows you to connect multiple sensors to one bus.
 
-## NodeMCU
+## Breadboard, wires, microUSB
 
-NodeMCU is a smart board with ESP8266 WiFi chip which has so much computing power that it can run Python (MicroPython).
+We are gonna use microUSB cable to power NodeMCU board, breadboard + wires to connect temperature sensor to NodeMCU.
 
 # Software
 
@@ -58,7 +76,7 @@ Connect NodeMcu with your computer using microUSB cable. Be careful! Don't let t
 
 ## Picocom/Putty
 
-We need some software to connect to the NodeMCU and to check that everything works. You'll need it also for checking the status of measuring later.
+We need some software to connect to the NodeMCU and to check that everything works. It'll be handy also for checking the status of measuring later.
 
 * On Linux, install package `picocom` which is available in Fedora, Ubuntu and others. If you like other software for serial communication, feel free to use it.
 * On Windows, download Putty from [this site](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html). You can install Putty system-wide or use standalone executable.
@@ -112,9 +130,11 @@ https://www.home-assistant.io/
 
 Before any manipulation, make sure that the NodeMCU is disconnected from a power source (computer)!
 
-To connect the sensor to the NodeMCU use this schema:
+To connect the sensor to the NodeMCU use the following schema. Make sure that the orientation of the sensor is right - "DS18B20" text heads towards NodeMCU and the belly of the sensor heads outside of the breadboard. And double check the wires before you connect NodeMCU back to power.
 
 ![DS18B20 wiring](images/DS18B20_wiring.png)
+
+After connecting NodeMCU back to the power source, touch the sensor fot a while. If it is connected incorrectly, it will very hot. In that case, disconnect it ASAP and check wires again.
 
 ## Source code
 
@@ -125,7 +145,7 @@ The script has to be modified before we can upload it. Open it in your favorite 
 To upload this code to NodeMCU we'll use ampy.
 
 ```
-ampy -p /dev/ttyUSB0 put DS18B20.py main.py
+ampy -p /dev/ttyUSB0 put scripts/DS18B20.py main.py
 ```
 
 The first name is the name of script on your computer and the second name is the name of the script on NodeMCU. When the name of the script on NodeMCU is `main.py` it is executed automatically after every restart.
@@ -156,7 +176,7 @@ First, go to the folder `/home/vagrant/.homeassistant/` where all configuration 
 
 ## Weather from the Internet
 
-Yr platorm provides more than just weather symbol so for the start, let's configure this sensor to gain more data. Place this configuration directly under the `platform: yr`.
+Yr platorm provides more than just weather symbol so for the start, let's configure this sensor to gain more data. Place this configuration directly under the `platform: yr` with a proper indentation.
 
 ```
 monitored_conditions:
@@ -285,7 +305,8 @@ Price is 150 CZK or 6 Euro. It's basically the same price you can buy this set o
 
 # Next steps
 
-* You can add as many sensors as you want based on different hardware or create own hardware.
+* Take a look at the HA demo: https://www.home-assistant.io/demo/
+* You can add as many sensors as you want based on different hardware or create own hardware. Take a look at the list of supported components: https://www.home-assistant.io/components/
 * Add more groups and views to make your UI uniq and clear.
 * You can make some hardware which will listen to commands from HA (MQTT).
 * You can fully automate your home ... impossible is nothing.
