@@ -97,7 +97,7 @@ Now is time to connect to the NodeMCU and play with MicroPython.
     * If you get "no such file or directory error" you probably have a typo in the name of the device. Check it again.
     * If you get a permission error, you'll need to become a member of the `dialout` group. Run `sudo usermod -a -G dialout $(whoami)` and then `su - $(whoami)` to relogin. Output of `groups` command should contain `dialout` in the list of groups now.
 * On Windows, run `Putty`, switch `Connection type` to `Serial`, and type your COM port into the `Serial` line. Then switch to `Serial` in the left menu and set `Speed` to `115200` and `Flow control` to `None`. Now click on the `Open` button.
-* On Mac, run `picocom -b 115200 --flow n /dev/tty.wchusbserial1410` in the Terminal app.
+* On Mac, run `picocom -b 115200 --flow n /dev/tty.wchusbserial1410` in the Terminal app, or you can use screen binary in this manner: `screen /dev/tty.wchusbserial1410 115200`
 
 When connected, try to hit Enter or restart the NodeMCU by the RST button near the microUSB connector. You should see `>>>` - the Python prompt!
 
