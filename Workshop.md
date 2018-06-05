@@ -75,6 +75,7 @@ Connect the NodeMCU with your computer using a microUSB cable. Be careful! Don't
 
 * On Linux, run `dmesg | tail`. You should see that a new device is registered under name ttyUSB0 or similar.
 * On Windows, open device manager and check whether the device was recognized or not. If not, install a proper driver from the `drivers` directory. When the device is recognized successfully, remember the COM port name.
+* On Mac install driver from drivers directory and restart macOS.
 
 ## Picocom/Putty
 
@@ -82,6 +83,7 @@ We need some software to connect to the NodeMCU and to check that everything wor
 
 * On Linux, install package `picocom` which is available in Fedora, Ubuntu and others. If you like other software for serial communication, feel free to use it.
 * On Windows, download Putty from [this site](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html). You can install Putty system-wide or use standalone executable.
+* On Mac, use homebrew to instal picocom `brew install picocom`
 
 ## MicroPython
 
@@ -95,6 +97,7 @@ Now is time to connect to the NodeMCU and play with MicroPython.
     * If you get "no such file or directory error" you probably have a typo in the name of the device. Check it again.
     * If you get a permission error, you'll need to become a member of the `dialout` group. Run `sudo usermod -a -G dialout $(whoami)` and then `su - $(whoami)` to relogin. Output of `groups` command should contain `dialout` in the list of groups now.
 * On Windows, run `Putty`, switch `Connection type` to `Serial`, and type your COM port into the `Serial` line. Then switch to `Serial` in the left menu and set `Speed` to `115200` and `Flow control` to `None`. Now click on the `Open` button.
+* On Mac, run `picocom -b 115200 --flow n /dev/tty.wchusbserial1410` in the Terminal app, or you can use screen binary in this manner: `screen /dev/tty.wchusbserial1410 115200`
 
 When connected, try to hit Enter or restart the NodeMCU by the RST button near the microUSB connector. You should see `>>>` - the Python prompt!
 
@@ -150,7 +153,7 @@ To upload this code to the NodeMCU we'll use ampy.
 ampy -p /dev/ttyUSB0 put scripts/DS18B20.py main.py
 ```
 
-The first filename is the name of the script on your computer and the second one is the name of the script on the NodeMCU. When the name of the script on the NodeMCU is `main.py` it is executed automatically after every restart.
+The first filename is the name of the script on your computer and the second one is the name of the script on the NodeMCU. When the name of the script on the NodeMCU is `main.py` it is executed automatically after every restart. When you are trying to upload, make sure that there are not any other serial connection active.
 
 ## Testing
 
